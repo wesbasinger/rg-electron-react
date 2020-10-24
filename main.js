@@ -92,6 +92,10 @@ ipcMain.on('open-spreadsheet', (event, arg) => {
     const fileString = res.filePaths[0];
     const excelValues = await extractValues(fileString);
     mainWindow.webContents.send('excel-values', excelValues);
-  })
+  }).catch(
+    () => {
+      console.log("back to mainWindow");
+    }
+  )
 
 });

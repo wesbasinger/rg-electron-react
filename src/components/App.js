@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 import LoadScreen from './LoadScreen.js';
 
+import { ipcRenderer } from 'electron';
+
 class App extends React.Component {
 
   constructor(props) {
@@ -11,6 +13,13 @@ class App extends React.Component {
     this.state = {
       values: null
     }
+
+    this.onExcelValues = this.onExcelValues.bind(this);
+    ipcRenderer.on('excel-values', this.onExcelValues);
+  }
+
+  onExcelValues(event, data) {
+    console.log(data);
   }
 
   render() {
