@@ -1,14 +1,31 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
 
+import { ipcRenderer } from 'electron';
+
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      values: null
+    }
+  }
+
   render() {
-    return (
-      <div>
-        <h1>Hello, Electron!</h1>
-        <p>I hope you enjoy using basic-electron-react-boilerplate to start your dev off right!</p>
-      </div>
-    );
+    if(!this.state.values) {
+      return(
+        <div>
+          <h1>Choose a 04.002 Quote Worksheet</h1>
+          <button onClick={
+            () => {
+              ipcRenderer.send('open-spreadsheet');
+            }
+          }>Load File</button>
+        </div>
+      )
+    }
   }
 }
 

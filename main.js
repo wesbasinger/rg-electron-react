@@ -1,9 +1,11 @@
 'use strict';
 
 // Import parts of electron to use
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path')
 const url = require('url')
+
+const { extractValues } = require('./spreadsheet');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,7 +20,7 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1024, height: 768, show: false,
+    width: 800, height: 600, show: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -80,4 +82,16 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
+ipcMain.on('open-spreadsheet', (event, arg) => {
+
+  dialog.showOpenDialog({ properties: ['openFile'] }).then(async (res) => {
+    const fileString = res.filePaths[0];
+    const excelValues = await extractValues(fileString);
+    mainWindow.webContents.send('excel-values', excelValues);
+  })
+
 });

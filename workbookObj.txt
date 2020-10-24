@@ -1,0 +1,69 @@
+FOR INSPECTION - WORKBOOK OBJECT
+
+Workbook {
+  created: 2009-07-10T14:21:26.000Z,
+  modified: 2020-10-17T20:52:34.000Z,
+  properties: { date1904: false },
+  calcProperties: {},
+  _worksheets: [
+    <1 empty item>,
+    Worksheet {
+      id: 1,
+      orderNo: 0,
+      name: 'Sheet1',
+      state: 'visible',
+      _rows: [Array],
+      _columns: [Array],
+      _keys: {},
+      _merges: [Object],
+      rowBreaks: [],
+      _workbook: [Circular],
+      properties: [Object],
+      pageSetup: [Object],
+      headerFooter: [Object],
+      dataValidations: [DataValidations],
+      views: [Array],
+      autoFilter: undefined,
+      _media: [Array],
+      sheetProtection: undefined,
+      tables: {},
+      conditionalFormattings: [Array]
+    }
+  ],
+  views: [
+    {
+      x: 0,
+      y: 0,
+      width: 16384,
+      height: 8192,
+      visibility: 'visible',
+      activeTab: 0,
+      firstSheet: 0
+    }
+  ],
+  media: [
+    {
+      type: 'image',
+      name: 'image1',
+      extension: 'jpeg',
+      buffer: <Buffer ff d8 ff e0 00 10 4a 46 49 46 00 01 02 00 00 64 00 64 00 00 ff ec 00 11 44 75 63 6b 79 00 01 00 04 00 00 00 64 00 00 ff ee 00 0e 41 64 6f 62 65 00 64 ... 35422 more bytes>,
+      index: 0
+    }
+  ],
+  _definedNames: DefinedNames { matrixMap: {} },
+  _xlsx: XLSX { workbook: [Circular] },
+  creator: 'Brandy Jones',
+  lastModifiedBy: '',
+  lastPrinted: 2010-05-13T16:19:47.000Z,
+  company: 'Hewlett-Packard Company',
+  manager: undefined,
+  title: '',
+  subject: '',
+  keywords: undefined,
+  category: undefined,
+  description: '',
+  language: 'en-US',
+  revision: 15,
+  contentStatus: undefined,
+  _themes: {}
+}
