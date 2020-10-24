@@ -2,6 +2,7 @@ import '../assets/css/App.css';
 import React, { Component } from 'react';
 
 import LoadScreen from './LoadScreen.js';
+import ConfirmationScreen from './ConfirmationScreen.js';
 
 import { ipcRenderer } from 'electron';
 
@@ -11,7 +12,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      values: null
+      values: null,
+      confirmed: false
     }
 
     this.onExcelValues = this.onExcelValues.bind(this);
@@ -19,12 +21,14 @@ class App extends React.Component {
   }
 
   onExcelValues(event, data) {
-    console.log(data);
+    this.setState({values: data});
   }
 
   render() {
     if(!this.state.values) {
       return(<LoadScreen />)
+    } else if (this.state.values && !this.state.confirmed) {
+      return (<ConfirmationScreen values={this.state.values} />)
     }
   }
 }
