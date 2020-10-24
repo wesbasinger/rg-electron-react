@@ -18,17 +18,24 @@ class App extends React.Component {
 
     this.onExcelValues = this.onExcelValues.bind(this);
     ipcRenderer.on('excel-values', this.onExcelValues);
+
   }
 
   onExcelValues(event, data) {
     this.setState({values: data});
   }
 
+  onConfirmValues(event) {
+    console.log("Heard confirmation event from window")
+    // TODO: DON'T FORGET TO SET STATE IN THE HANDLER
+    ipcRenderer.send("confirm-values");
+  }
+
   render() {
     if(!this.state.values) {
       return(<LoadScreen />)
     } else if (this.state.values && !this.state.confirmed) {
-      return (<ConfirmationScreen values={this.state.values} />)
+      return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     }
   }
 }

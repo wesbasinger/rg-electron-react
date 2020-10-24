@@ -141,7 +141,7 @@ class ConfirmationScreen extends React.Component {
               </tr>
             </tbody>
             </table>
-          <button>ConfirmValues</button>
+          <button onClick={this.props.onConfirm} >ConfirmValues</button>
         </div>
       )
   }
