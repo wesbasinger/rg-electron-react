@@ -1,7 +1,7 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
 
-import { ipcRenderer } from 'electron';
+import LoadScreen from './LoadScreen.js';
 
 class App extends React.Component {
 
@@ -15,16 +15,7 @@ class App extends React.Component {
 
   render() {
     if(!this.state.values) {
-      return(
-        <div>
-          <h1>Choose a 04.002 Quote Worksheet</h1>
-          <button onClick={
-            () => {
-              ipcRenderer.send('open-spreadsheet');
-            }
-          }>Load File</button>
-        </div>
-      )
+      return(<LoadScreen />)
     }
   }
 }
