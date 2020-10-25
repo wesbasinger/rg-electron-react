@@ -113,6 +113,11 @@ module.exports = (values) => {
       "desc" : "PREP",
       "setupQty" : 0,
       "prodQty" : values.prepLeads
+    },
+    {
+      "desc" : "STUFF",
+      "setupQty" : 0,
+      "prodQty" : values.stuffPlacements
     }
   ]
 }

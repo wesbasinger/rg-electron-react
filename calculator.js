@@ -56,6 +56,13 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per lead
         note: `${wcObj.prodQty} total leads to be prepped`
       }])
+    case "STUFF":
+      return([{
+        desc: "STUFF",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per location
+        note: `${wcObj.prodQty} total placements`
+      }])
   }
 
 }
