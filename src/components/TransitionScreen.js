@@ -11,12 +11,14 @@ class TransitionScreen extends React.Component {
     this.state = {
       wc: "",
       setupQty: 0,
-      prodQty: 0
+      prodQty: 0,
+      note: ""
     }
 
     this.handleWcChange = this.handleWcChange.bind(this);
     this.handleSetupQtyChange = this.handleSetupQtyChange.bind(this);
     this.handleProdQtyChange = this.handleProdQtyChange.bind(this);
+    this.handleNoteChange = this.handleNoteChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -30,6 +32,10 @@ class TransitionScreen extends React.Component {
 
   handleSetupQtyChange(e) {
     this.setState({setupQty: Number(e.target.value)})
+  }
+
+  handleNoteChange(e) {
+    this.setState({note: e.target.value});
   }
 
   handleSubmit(e) {
@@ -61,6 +67,9 @@ class TransitionScreen extends React.Component {
               <input type="number" min="0" value={this.state.setupQty} onChange={this.handleSetupQtyChange} />
               <label>Prod Qty</label>
               <input type="number" min="0" value={this.state.prodQty} onChange={this.handleProdQtyChange} />
+              <br />
+              <label>Note</label>
+              <input type="text" value={this.state.note} onChange={this.handleNoteChange} /> 
               <button type="submit">Go</button>
             </form>
           </div>

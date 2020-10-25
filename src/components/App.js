@@ -6,6 +6,7 @@ import ConfirmationScreen from './ConfirmationScreen';
 import TransitionScreen from './TransitionScreen';
 
 import reduce from '../../reduce';
+import { subtract } from '../../helper';
 
 import { ipcRenderer } from 'electron';
 
@@ -40,7 +41,9 @@ class App extends React.Component {
   }
 
   handleAddOperation(data) {
-    console.log(data);
+    // decrement either setup qty or prodQty of the requested operation
+    const newReduced = subtract(this.state.reduced, data);
+    this.setState({reduced: newReduced})
   }
 
   render() {
