@@ -99,7 +99,3 @@ ipcMain.on('open-spreadsheet', (event, arg) => {
   )
 
 });
-
-ipcMain.on('confirm-values', (event, arg) => {
-  console.log("heard confirm event");
-})

@@ -1,8 +1,11 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
 
-import LoadScreen from './LoadScreen.js';
-import ConfirmationScreen from './ConfirmationScreen.js';
+import LoadScreen from './LoadScreen';
+import ConfirmationScreen from './ConfirmationScreen';
+import TransitionScreen from './TransitionScreen';
+
+import reduce from '../../reduce';
 
 import { ipcRenderer } from 'electron';
 
@@ -13,11 +16,14 @@ class App extends React.Component {
 
     this.state = {
       values: null,
-      confirmed: false
+      confirmed: false,
+      reduced: null
     }
 
     this.onExcelValues = this.onExcelValues.bind(this);
     ipcRenderer.on('excel-values', this.onExcelValues);
+
+    this.onConfirmValues = this.onConfirmValues.bind(this);
 
   }
 
@@ -26,9 +32,11 @@ class App extends React.Component {
   }
 
   onConfirmValues(event) {
-    console.log("Heard confirmation event from window")
-    // TODO: DON'T FORGET TO SET STATE IN THE HANDLER
-    ipcRenderer.send("confirm-values");
+    const reducedValues = reduce(this.state.values);
+    this.setState({
+      reduced : reducedValues,
+      confirmed: true
+    });
   }
 
   render() {
@@ -36,6 +44,8 @@ class App extends React.Component {
       return(<LoadScreen />)
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
+    } else if (this.state.values && this.state.confirmed && this.state.reduced) {
+      return (<TransitionScreen values={this.state.reduced} />)
     }
   }
 }

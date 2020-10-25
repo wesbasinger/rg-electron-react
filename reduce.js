@@ -34,10 +34,11 @@ SAMPLE EXCEL Values
 
 // all time considered as seconds
 // each work center is associated with a length 2 array [setup qty, production qty]
-export default (values) => {
+module.exports = (values) => {
 
-  return  {
-    "MAT" : {
+  return  [
+    {
+      "desc" : "MAT",
       "setup": values.hsldrComponents +
              values.mechComponents +
              values.smtComponents +
@@ -45,57 +46,70 @@ export default (values) => {
              values.stuffComponents,
       "prod": 0
     },
-    "SMT" : {
+    {
+        "desc": "SMT",
         "setup" : values.smtComponents,
         "prod" : values.smtPlacements
     },
-    "MASK" : {
+    {
+      "desc" : "MASK",
       "setup" : 0,
       "prod" : values.maskAreas
     },
-    "SSLDR" : {
+    {
+      "desc" : "SSLDR",
       "setup" : 0,
       "prod" : values.ssldrJoints
     },
-    "FLOW" : {
+    {
+      "desc" : "FLOW",
       "setup" : 0,
       "prod" : values.flowCycle === "YES" ? 1 : 0
     },
-    "WASH" : {
+    {
+      "desc" : "WASH",
       "setup": 0,
       "prod" : values.washCycles
     },
-    "TRIM" : {
+    {
+      "desc" : "TRIM",
       "setup" : 0,
       "prod" : values.trimLeads
     },
-    "HSLDR" : {
+    {
+      "desc" : "HSLDR",
       "setup" : 0,
       "prod" : values.hsldrLeads
     },
-    "CABLE" : {
+    {
+      "desc" : "CABLE",
       "setup" : 0,
       "prod" : 0 // TODO: GO BACK AND READ THIS IN AS A VALUE
     },
-    "TEST" : {
+    {
+      "desc" : "TEST",
       "setup" : 0,
       "prod" : values.pgrmAndTestMinutes
     },
-    "SHEAR" : {
+    {
+      "desc" : "SHEAR",
       "setup" : 0,
       "prod" : values.depanelize === "YES" ? 1 : 0
     },
-    "COAT" : {
+    {
+      "desc" : "COAT",
       "setup" : 0,
       "prod" : values.coating === "YES" ? 1 : 0
     },
-    "MECH" : {
+    {
+      "desc" : "MECH",
       "setup" : 0,
       "prod" : values.mechMinutes
     },
-    "PACK" : {
+    {
+      "desc" : "PACK",
       "setup" : 0,
       "prod" : values.packingCost > 0 ? 1 : 0
     }
-  }
+  ]
 }
