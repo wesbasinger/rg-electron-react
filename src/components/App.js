@@ -63,7 +63,7 @@ class App extends React.Component {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     } else if (this.state.values && this.state.confirmed && this.state.reduced) {
       return (<TransitionScreen
-        rtg={this.state.rtg} onAddOperation={this.handleAddOperation} values={this.state.reduced} />)
+        rtg={this.state.rtg} onAddOperation={this.handleAddOperation} values={this.state.reduced} releaseSize={this.state.values.releaseSize}/>)
     }
   }
 }

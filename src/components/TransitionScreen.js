@@ -45,6 +45,7 @@ class TransitionScreen extends React.Component {
   render() {
       return(
         <div>
+          <p>Release Size: {this.props.releaseSize}</p>
           <div>
             <RemainingWorkCenters workCenters={this.props.values} />
           </div>
@@ -92,7 +93,7 @@ class TransitionScreen extends React.Component {
                         <td>{op.desc}</td>
                         <td>{op.setupTime}</td>
                         <td>{op.prodTime}</td>
-                        <td>Total Time</td>
+                        <td>{op.setupTime + op.prodTime*this.props.releaseSize}</td>
                         <td>{op.note}</td>
                       </tr>
                     )

@@ -159,6 +159,15 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (totalComponents*0.4)/3600,
         note: `${totalComponents} components to inspect`
       }])
+
+    case "PACK":
+
+      return([{
+        desc: "PACK",
+        setupTime: 0,
+        prodTime: 30/3600,
+        note: "Standard 30 seconds per unit"
+      }])
   }
 
 }
