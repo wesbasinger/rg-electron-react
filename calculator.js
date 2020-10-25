@@ -33,6 +33,15 @@ module.exports = (wcObj, excelValues) => {
           }
         ]
       )
+
+    case "MASK":
+      return([{
+        desc: "MASK",
+        setupTime: 0,
+        prodTime: (excelValues.maskAreas*15)/3600,
+        note: `${excelValues.maskAreas} mask areas`
+      }])
+
   }
 
 }
