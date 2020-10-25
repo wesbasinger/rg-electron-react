@@ -6,7 +6,7 @@ module.exports = (wcObj, excelValues) => {
         desc: "MAT",
         setupTime: (120 * wcObj.setupQty + 5*60)/ 3600,
         prodTime: 0.001,
-        note: `${wcObj.note} ${wcObj.setupQty} line items.`
+        note: `${wcObj.setupQty} line items.`
       }])
     case "SMT":
       let maxPlacementsPerHour = excelValues.boardPerPanel*wcObj.prodQty*80;

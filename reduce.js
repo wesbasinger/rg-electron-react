@@ -39,77 +39,77 @@ module.exports = (values) => {
   return  [
     {
       "desc" : "MAT",
-      "setup": values.hsldrComponents +
+      "setupQty": values.hsldrComponents +
              values.mechComponents +
              values.smtComponents +
              values.ssldrComponents +
              values.stuffComponents,
-      "prod": 0
+      "prodQty": 0
     },
     {
         "desc": "SMT",
-        "setup" : values.smtComponents,
-        "prod" : values.smtPlacements
+        "setupQty" : values.smtComponents,
+        "prodQty" : values.smtPlacements
     },
     {
       "desc" : "MASK",
-      "setup" : 0,
-      "prod" : values.maskAreas
+      "setupQty" : 0,
+      "prodQty" : values.maskAreas
     },
     {
       "desc" : "SSLDR",
-      "setup" : 0,
-      "prod" : values.ssldrJoints
+      "setupQty" : 0,
+      "prodQty" : values.ssldrJoints
     },
     {
       "desc" : "FLOW",
-      "setup" : 0,
-      "prod" : values.flowCycle === "YES" ? 1 : 0
+      "setupQty" : 0,
+      "prodQty" : values.flowCycle === "YES" ? 1 : 0
     },
     {
       "desc" : "WASH",
-      "setup": 0,
-      "prod" : values.washCycles
+      "setupQty": 0,
+      "prodQty" : values.washCycles
     },
     {
       "desc" : "TRIM",
-      "setup" : 0,
-      "prod" : values.trimLeads
+      "setupQty" : 0,
+      "prodQty" : values.trimLeads
     },
     {
       "desc" : "HSLDR",
-      "setup" : 0,
-      "prod" : values.hsldrLeads
+      "setupQty" : 0,
+      "prodQty" : values.hsldrLeads
     },
     {
       "desc" : "CABLE",
-      "setup" : 0,
-      "prod" : 0 // TODO: GO BACK AND READ THIS IN AS A VALUE
+      "setupQty" : 0,
+      "prodQty" : 0 // TODO: GO BACK AND READ THIS IN AS A VALUE
     },
     {
       "desc" : "TEST",
-      "setup" : 0,
-      "prod" : values.pgrmAndTestMinutes
+      "setupQty" : 0,
+      "prodQty" : values.pgrmAndTestMinutes
     },
     {
       "desc" : "SHEAR",
-      "setup" : 0,
-      "prod" : values.depanelize === "YES" ? 1 : 0
+      "setupQty" : 0,
+      "prodQty" : values.depanelize === "YES" ? 1 : 0
     },
     {
       "desc" : "COAT",
-      "setup" : 0,
-      "prod" : values.coating === "YES" ? 1 : 0
+      "setupQty" : 0,
+      "prodQty" : values.coating === "YES" ? 1 : 0
     },
     {
       "desc" : "MECH",
-      "setup" : 0,
-      "prod" : values.mechMinutes
+      "setupQty" : 0,
+      "prodQty" : values.mechMinutes
     },
     {
       "desc" : "PACK",
-      "setup" : 0,
-      "prod" : values.packingCost > 0 ? 1 : 0
+      "setupQty" : 0,
+      "prodQty" : values.packingCost > 0 ? 1 : 0
     }
   ]
 }

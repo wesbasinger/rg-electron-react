@@ -17,12 +17,12 @@ class RemainingWorkCenters extends React.Component {
           <tbody>
             {
               this.props.workCenters.map( (val) => {
-                if(val.prod > 0 || val.setup > 0) {
+                if(val.prodQty > 0 || val.setupQty > 0) {
                   return(
                     <tr key={val.desc}>
                       <td>{val.desc}</td>
-                      <td>{val.setup}</td>
-                      <td>{val.prod}</td>
+                      <td>{val.setupQty}</td>
+                      <td>{val.prodQty}</td>
                     </tr>
                   )
                 }
