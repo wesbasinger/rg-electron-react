@@ -6,14 +6,15 @@
 const subtract = (reduceArr, wcObj) => {
   const resultArr = [];
   reduceArr.forEach((wc) => {
+    console.log(wc);
     if(wc.desc !== wcObj.wc) {
       resultArr.push(wc);
     } else {
       console.log("Found it!")
       resultArr.push({
         "desc" : wc.desc,
-        "setupQty" : wc.setupQty - wcObj.setupQty,
-        "prodQty" : wc.prodQty - wcObj.prodQty
+        "setupQty" : wc.setup - wcObj.setupQty,
+        "prodQty" : wc.prod - wcObj.prodQty
       })
     }
   })

@@ -45,7 +45,7 @@ class App extends React.Component {
   handleAddOperation(data) {
 
     const previousOps = [...this.state.rtg];
-    const newOps = calculate(data);
+    const newOps = calculate(data, this.state.values);
     newOps.forEach((op) => {
       previousOps.push(op);
     })
