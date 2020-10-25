@@ -122,6 +122,24 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (wcObj.prodQty) / 60,
         note: `${wcObj.prodQty} minutes of test`
       }])
+
+    case "SHEAR":
+      return([{
+        desc: "SHEAR",
+        setupTime: 0,
+        prodTime: 5/3600,
+        note: "Assume 5 seconds per assembly"
+      }])
+
+    case "COAT":
+      return([{
+        desc: "COAT",
+        setupTime: 0,
+        prodTime: (excelValues.coatHandleSecPerBoard
+                  + excelValues.coatTimeSecPerSqInch*excelValues.sqInchPerBoard) / 3600,
+        note: `${(excelValues.coatHandleSecPerBoard
+                  + excelValues.coatTimeSecPerSqInch*excelValues.sqInchPerBoard)/60} minutes per board`
+      }])
   }
 
 }
