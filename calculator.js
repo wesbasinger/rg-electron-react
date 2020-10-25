@@ -57,12 +57,32 @@ module.exports = (wcObj, excelValues) => {
         note: `${wcObj.prodQty} total leads to be prepped`
       }])
     case "STUFF":
+
       return([{
         desc: "STUFF",
         setupTime: 0,
         prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per location
         note: `${wcObj.prodQty} total placements`
       }])
+    case "FLOW":
+
+      const flowBoardsPerHour = excelValues.flowPanelsPerHour*excelValues.boardPerPanel
+      const flowHoursPerBoard = 1 / flowBoardsPerHour;
+
+      return([
+        {
+          desc: "FLOW",
+          setupTime: 0,
+          prodTime: flowHoursPerBoard,
+          note: `Assuming ${flowBoardsPerHour} boards per hour.`
+        },
+        {
+          desc: "IPQC",
+          setupTime: 0,
+          prodTime: (excelValues.stuffPlacements*3)/3600, // assuming 3 seconds insp per placements
+          note: `${excelValues.stuffComponents} placements to inspect`
+        }
+      ])
   }
 
 }
