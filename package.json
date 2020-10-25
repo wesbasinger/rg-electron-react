@@ -1,12 +1,12 @@
 {
-  "name": "basic-electron-react-boilerplate",
-  "version": "0.7.0",
-  "description": "Minimal and modern react+electron+webpack boilerplate",
-  "author": "Phillip Barbiero",
-  "homepage": "https://github.com/pbarbiero/basic-electron-react-boilerplate",
+  "name": "routing-generator",
+  "version": "0.1.0",
+  "description": "Reads a 04.002 Quotation Spreadsheet and outputs a draft routing",
+  "author": "Wes Basinger",
+  "homepage": "https://github.com/wesbasinger/rg-electron-react",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pbarbiero/basic-electron-react-boilerplate.git"
+    "url": "https://github.com/wesbasinger/rg-electron-react.git"
   },
   "license": "MIT",
   "main": "main.js",
