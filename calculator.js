@@ -38,8 +38,15 @@ module.exports = (wcObj, excelValues) => {
       return([{
         desc: "MASK",
         setupTime: 0,
-        prodTime: (excelValues.maskAreas*15)/3600,
-        note: `${excelValues.maskAreas} mask areas`
+        prodTime: (wcObj.prodQty*15)/3600,
+        note: `${wcObj.prodQty} mask areas`
+      }])
+
+    case "SSLDR":
+      return([{
+        desc: "SSLDR",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty*excelValues.ssldrSecJoint) / 3600
       }])
 
   }
