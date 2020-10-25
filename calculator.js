@@ -83,6 +83,21 @@ module.exports = (wcObj, excelValues) => {
           note: `${excelValues.stuffComponents} placements to inspect`
         }
       ])
+
+    case "WASH":
+      let washTime = 8*60; // assume minumum of 8 minutes per wash cycle
+      const totalPanels = Math.ceil(excelValues.releaseSize/excelValues.boardPerPanel);
+
+      if(totalPanels >= 5) {
+        washTime += 12*totalPanels
+      }
+
+      return([{
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/excelValues.releaseSize)/3600,
+        note: ""
+      }])
   }
 
 }
