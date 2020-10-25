@@ -114,6 +114,14 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (wcObj.prodQty*10)/3600, // assume 10 minutes per joint
         note: `${wcObj.prodQty} joints to solder`
       }])
+
+    case "TEST":
+      return([{
+        desc: "TEST",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty) / 60,
+        note: `${wcObj.prodQty} minutes of test`
+      }])
   }
 
 }
