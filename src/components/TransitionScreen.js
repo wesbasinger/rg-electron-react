@@ -10,17 +10,31 @@ class TransitionScreen extends React.Component {
 
     this.state = {
       wc: "",
-      setupQty: "",
-      prodQty: ""
+      setupQty: 0,
+      prodQty: 0
     }
 
     this.handleWcChange = this.handleWcChange.bind(this);
-    //this.handleSetupQtyChange = this.handleSetupQtyChange.bind(this);
-    //this.handleProdQtyChange = this.coatHandleSecPerBoard.bind(this);
+    this.handleSetupQtyChange = this.handleSetupQtyChange.bind(this);
+    this.handleProdQtyChange = this.handleProdQtyChange.bind(this);
+    this.handleAddOperation = this.handleAddOperation.bind(this);
   }
 
   handleWcChange(e) {
     this.setState({wc: e.target.value});
+  }
+
+  handleProdQtyChange(e) {
+    this.setState({prodQty: Number(e.target.value)})
+  }
+
+  handleSetupQtyChange(e) {
+    this.setState({setupQty: Number(e.target.value)})
+  }
+
+  handleAddOperation(e) {
+    e.preventDefault();
+    console.log("Submit");
   }
 
   render() {
@@ -30,7 +44,8 @@ class TransitionScreen extends React.Component {
             <RemainingWorkCenters workCenters={this.props.values} />
           </div>
           <div>
-            <form>
+            <h1>Select Next Operation</h1>
+            <form onSubmit={this.handleAddOperation}>
               <label>Work Center</label>
               <select onChange={this.handleWcChange}>
                 <option value=""></option>
@@ -42,6 +57,11 @@ class TransitionScreen extends React.Component {
                   })
                 }
               </select>
+              <label>Setup Qty</label>
+              <input type="number" min="0" value={this.state.setupQty} onChange={this.handleSetupQtyChange} />
+              <label>Prod Qty</label>
+              <input type="number" min="0" value={this.state.prodQty} onChange={this.handleProdQtyChange} />
+              <button type="submit">Go</button>
             </form>
           </div>
         </div>
