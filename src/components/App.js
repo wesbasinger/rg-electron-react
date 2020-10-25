@@ -24,7 +24,7 @@ class App extends React.Component {
     ipcRenderer.on('excel-values', this.onExcelValues);
 
     this.onConfirmValues = this.onConfirmValues.bind(this);
-
+    this.handleAddOperation = this.handleAddOperation.bind(this);
   }
 
   onExcelValues(event, data) {
@@ -39,13 +39,17 @@ class App extends React.Component {
     });
   }
 
+  handleAddOperation(data) {
+    console.log(data);
+  }
+
   render() {
     if(!this.state.values) {
       return(<LoadScreen />)
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     } else if (this.state.values && this.state.confirmed && this.state.reduced) {
-      return (<TransitionScreen values={this.state.reduced} />)
+      return (<TransitionScreen onAddOperation={this.handleAddOperation} values={this.state.reduced} />)
     }
   }
 }

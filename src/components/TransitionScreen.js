@@ -17,7 +17,7 @@ class TransitionScreen extends React.Component {
     this.handleWcChange = this.handleWcChange.bind(this);
     this.handleSetupQtyChange = this.handleSetupQtyChange.bind(this);
     this.handleProdQtyChange = this.handleProdQtyChange.bind(this);
-    this.handleAddOperation = this.handleAddOperation.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleWcChange(e) {
@@ -32,9 +32,9 @@ class TransitionScreen extends React.Component {
     this.setState({setupQty: Number(e.target.value)})
   }
 
-  handleAddOperation(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    console.log("Submit");
+    this.props.onAddOperation(this.state);
   }
 
   render() {
@@ -45,7 +45,7 @@ class TransitionScreen extends React.Component {
           </div>
           <div>
             <h1>Select Next Operation</h1>
-            <form onSubmit={this.handleAddOperation}>
+            <form onSubmit={this.handleSubmit}>
               <label>Work Center</label>
               <select onChange={this.handleWcChange}>
                 <option value=""></option>
