@@ -98,6 +98,14 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (washTime/excelValues.releaseSize)/3600,
         note: ""
       }])
+
+    case "TRIM":
+      return([{
+        desc: "TRIM",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty/2.5)/3600,
+        note: `${wcObj.prodQty} leads to trim`
+      }])
   }
 
 }
