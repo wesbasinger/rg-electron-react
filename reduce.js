@@ -108,6 +108,11 @@ module.exports = (values) => {
       "desc" : "PACK",
       "setupQty" : 0,
       "prodQty" : values.packingCost > 0 ? 1 : 0
+    },
+    {
+      "desc" : "PREP",
+      "setupQty" : 0,
+      "prodQty" : values.prepLeads
     }
   ]
 }

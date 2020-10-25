@@ -38,7 +38,7 @@ module.exports = (wcObj, excelValues) => {
       return([{
         desc: "MASK",
         setupTime: 0,
-        prodTime: (wcObj.prodQty*15)/3600,
+        prodTime: (wcObj.prodQty*15)/3600, //default of 15 cent per area
         note: `${wcObj.prodQty} mask areas`
       }])
 
@@ -46,9 +46,16 @@ module.exports = (wcObj, excelValues) => {
       return([{
         desc: "SSLDR",
         setupTime: 0,
-        prodTime: (wcObj.prodQty*excelValues.ssldrSecJoint) / 3600
+        prodTime: (wcObj.prodQty*excelValues.ssldrSecJoint) / 3600,
+        note: ""
       }])
-
+    case "PREP":
+      return([{
+        desc: "PREP",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per lead
+        note: `${wcObj.prodQty} total leads to be prepped`
+      }])
   }
 
 }
