@@ -35,6 +35,11 @@ class TransitionScreen extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.onAddOperation(this.state);
+    this.setState({
+      wc: "",
+      setupQty: 0,
+      prodQty: 0
+    })
   }
 
   render() {
@@ -51,9 +56,9 @@ class TransitionScreen extends React.Component {
                 <option value=""></option>
                 {
                   this.props.values.map((val) => {
-                    return(
-                      <option key={val.desc} value={val.desc}>{val.desc}</option>
-                    )
+                      if(val.prodQty > 0 || val.setupQty > 0) {
+                        return(<option key={val.desc} value={val.desc}>{val.desc}</option>);
+                      }
                   })
                 }
               </select>

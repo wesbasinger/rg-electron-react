@@ -32,8 +32,6 @@ SAMPLE EXCEL Values
 }
 */
 
-// all time considered as seconds
-// each work center is associated with a length 2 array [setup qty, production qty]
 module.exports = (values) => {
 
   return  [
