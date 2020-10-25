@@ -6,6 +6,7 @@ import ConfirmationScreen from './ConfirmationScreen';
 import TransitionScreen from './TransitionScreen';
 
 import reduce from '../../reduce';
+import calculate from '../../calculator';
 import { subtract } from '../../helper';
 
 import { ipcRenderer } from 'electron';
@@ -18,7 +19,8 @@ class App extends React.Component {
     this.state = {
       values: null,
       confirmed: false,
-      reduced: null
+      reduced: null,
+      rtg: []
     }
 
     this.onExcelValues = this.onExcelValues.bind(this);
@@ -41,9 +43,17 @@ class App extends React.Component {
   }
 
   handleAddOperation(data) {
+
+    const previousOps = [...this.state.rtg];
+    const newOps = calculate(data);
+    newOps.forEach((op) => {
+      previousOps.push(op);
+    })
+    this.setState({rtg: previousOps});
     // decrement either setup qty or prodQty of the requested operation
     const newReduced = subtract(this.state.reduced, data);
     this.setState({reduced: newReduced})
+
   }
 
   render() {
@@ -52,7 +62,8 @@ class App extends React.Component {
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     } else if (this.state.values && this.state.confirmed && this.state.reduced) {
-      return (<TransitionScreen onAddOperation={this.handleAddOperation} values={this.state.reduced} />)
+      return (<TransitionScreen
+        rtg={this.state.rtg} onAddOperation={this.handleAddOperation} values={this.state.reduced} />)
     }
   }
 }

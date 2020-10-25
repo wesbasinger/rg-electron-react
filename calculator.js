@@ -1,11 +1,13 @@
-modules.exports = (wcObj) => {
+module.exports = (wcObj) => {
 
-  switch wcObj.desc:
+  switch (wcObj.wc) {
     case "MAT":
-      return {
+      return ([{
         desc: "MAT",
-        setupTime: (120 * wcObj.setupQty + 5*60)/ 60,
-        prodTime: 0.001
-      }
+        setupTime: (120 * wcObj.setupQty + 5*60)/ 3600,
+        prodTime: 0.001,
+        note: `${wcObj.note} ${wcObj.setupQty} line items.`
+      }])
+  }
 
 }

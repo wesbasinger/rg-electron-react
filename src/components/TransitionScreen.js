@@ -69,9 +69,41 @@ class TransitionScreen extends React.Component {
               <input type="number" min="0" value={this.state.prodQty} onChange={this.handleProdQtyChange} />
               <br />
               <label>Note</label>
-              <input type="text" value={this.state.note} onChange={this.handleNoteChange} /> 
+              <input type="text" value={this.state.note} onChange={this.handleNoteChange} />
               <button type="submit">Go</button>
             </form>
+          </div>
+          <div>
+            <h1>Routing Steps</h1>
+            <table>
+              <thead>
+                <tr>
+                  <td>Seq</td>
+                  <td>WC</td>
+                  <td>Setup Time</td>
+                  <td>Prod Time</td>
+                  <td>Total Time</td>
+                  <td>Note</td>
+                </tr>
+              </thead>
+              <tbody>
+                {
+
+                  this.props.rtg.map((op, idx) => {
+                    return(
+                      <tr key={idx}>
+                        <td>{idx}</td>
+                        <td>{op.desc}</td>
+                        <td>{op.setupTime}</td>
+                        <td>{op.prodTime}</td>
+                        <td>Total Time</td>
+                        <td>{op.note}</td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
           </div>
         </div>
       )
