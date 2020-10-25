@@ -140,6 +140,14 @@ module.exports = (wcObj, excelValues) => {
         note: `${(excelValues.coatHandleSecPerBoard
                   + excelValues.coatTimeSecPerSqInch*excelValues.sqInchPerBoard)/60} minutes per board`
       }])
+
+    case "MECH":
+      return([{
+        desc: "MECH",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty)/60,
+        note: `${wcObj.prodQty} minutes per assembly`
+      }])
   }
 
 }

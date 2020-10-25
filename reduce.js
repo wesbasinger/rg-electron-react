@@ -118,6 +118,11 @@ module.exports = (values) => {
       "desc" : "STUFF",
       "setupQty" : 0,
       "prodQty" : values.stuffPlacements
+    },
+    {
+      "desc" : "MECH",
+      "setupQty" : 0,
+      "prodQty" : values.mechMinutes
     }
   ]
 }
