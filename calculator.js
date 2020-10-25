@@ -106,6 +106,14 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (wcObj.prodQty/2.5)/3600,
         note: `${wcObj.prodQty} leads to trim`
       }])
+
+    case "HSLDR":
+      return ([{
+        desc: "HSLDR",
+        setupTime: 0,
+        prodTime: (wcObj.prodQty*10)/3600, // assume 10 minutes per joint
+        note: `${wcObj.prodQty} joints to solder`
+      }])
   }
 
 }
