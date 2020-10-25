@@ -148,6 +148,17 @@ module.exports = (wcObj, excelValues) => {
         prodTime: (wcObj.prodQty)/60,
         note: `${wcObj.prodQty} minutes per assembly`
       }])
+
+    case "FINAL":
+
+      const totalComponents = excelValues.smtComponents + excelValues.ssldrComponents +
+                              excelValues.stuffComponents + excelValues.hsldrComponents + excelValues.mechComponents;
+      return([{
+        desc: "FINAL",
+        setupTime: 0,
+        prodTime: (totalComponents*0.4)/3600,
+        note: `${totalComponents} components to inspect`
+      }])
   }
 
 }

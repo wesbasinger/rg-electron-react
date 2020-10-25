@@ -100,11 +100,6 @@ module.exports = (values) => {
       "prodQty" : values.coating === "YES" ? 1 : 0
     },
     {
-      "desc" : "MECH",
-      "setupQty" : 0,
-      "prodQty" : values.mechMinutes
-    },
-    {
       "desc" : "PACK",
       "setupQty" : 0,
       "prodQty" : values.packingCost > 0 ? 1 : 0
@@ -123,6 +118,11 @@ module.exports = (values) => {
       "desc" : "MECH",
       "setupQty" : 0,
       "prodQty" : values.mechMinutes
+    },
+    {
+      "desc" : "FINAL",
+      "setupQty" : 0,
+      "prodQty" : 1
     }
   ]
 }
