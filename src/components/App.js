@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 
 import LoadScreen from './LoadScreen';
 import ConfirmationScreen from './ConfirmationScreen';
-import TransitionScreen from './TransitionScreen';
+import RoutingScreen from './RoutingScreen';
 
-import reduce from '../../reduce';
 import calculate from '../../calculator';
-import { subtract } from '../../helper';
 
 import { ipcRenderer } from 'electron';
 
@@ -19,7 +17,6 @@ class App extends React.Component {
     this.state = {
       values: null,
       confirmed: false,
-      reduced: null,
       rtg: []
     }
 
@@ -27,7 +24,6 @@ class App extends React.Component {
     ipcRenderer.on('excel-values', this.onExcelValues);
 
     this.onConfirmValues = this.onConfirmValues.bind(this);
-    this.handleAddOperation = this.handleAddOperation.bind(this);
   }
 
   onExcelValues(event, data) {
@@ -35,25 +31,9 @@ class App extends React.Component {
   }
 
   onConfirmValues(event) {
-    const reducedValues = reduce(this.state.values);
-    this.setState({
-      reduced : reducedValues,
-      confirmed: true
-    });
-  }
-
-  handleAddOperation(data) {
-
-    const previousOps = [...this.state.rtg];
-    const newOps = calculate(data, this.state.values);
-    newOps.forEach((op) => {
-      previousOps.push(op);
-    })
-    this.setState({rtg: previousOps});
-    // decrement either setup qty or prodQty of the requested operation
-    const newReduced = subtract(this.state.reduced, data);
-    this.setState({reduced: newReduced})
-
+    const calcRtg = calculate(this.state.values);
+    this.setState({rtg: calcRtg});
+    this.setState({confirmed:true})
   }
 
   render() {
@@ -61,9 +41,8 @@ class App extends React.Component {
       return(<LoadScreen />)
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
-    } else if (this.state.values && this.state.confirmed && this.state.reduced) {
-      return (<TransitionScreen
-        rtg={this.state.rtg} onAddOperation={this.handleAddOperation} values={this.state.reduced} releaseSize={this.state.values.releaseSize}/>)
+    } else if (this.state.confirmed) {
+      return (<RoutingScreen rtg={this.state.rtg} />)
     }
   }
 }
