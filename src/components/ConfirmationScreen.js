@@ -60,68 +60,56 @@ class ConfirmationScreen extends React.Component {
               </thead>
             <tbody>
               <tr>
-                <td>Coating</td>
-                <td>{this.props.values.coating}</td>
+                <td>Total SMT Components</td>
+                <td>{this.props.values.smtComponents}</td>
               </tr>
               <tr>
-                <td>Depanelize</td>
-                <td>{this.props.values.depanelize}</td>
+                <td>SMT Side One Placements</td>
+                <td>{this.props.values.smtSideOnePlacements}</td>
               </tr>
               <tr>
-                <td>Flow</td>
-                <td>{this.props.values.flowCycle}</td>
+                <td>Wash SMT Side One</td>
+                <td>{this.props.values.washSMTSideOne}</td>
               </tr>
               <tr>
-                <td>Hand Solder Components</td>
-                <td>{this.props.values.hsldrComponents}</td>
+                <td>SMT Side Two Placements</td>
+                <td>{this.props.values.smtSideTwoPlacements}</td>
               </tr>
               <tr>
-                <td>Hand Solder Leads</td>
-                <td>{this.props.values.hsldrLeads}</td>
+                <td>Wash SMT Side Two</td>
+                <td>{this.props.values.washSMTSideTwo}</td>
               </tr>
               <tr>
                 <td>Mask Areas</td>
                 <td>{this.props.values.maskAreas}</td>
               </tr>
               <tr>
-                <td>Mechanical Components</td>
-                <td>{this.props.values.mechComponents}</td>
+                <td>SSLDR Side One Components</td>
+                <td>{this.props.values.ssldrSideOneComponents}</td>
               </tr>
               <tr>
-                <td>Mechanical Minutes</td>
-                <td>{this.props.values.mechMinutes}</td>
+                <td>SSLDR Side One Joints</td>
+                <td>{this.props.values.ssldrSideOneJoints}</td>
               </tr>
               <tr>
-                <td>Packing Cost</td>
-                <td>{this.props.values.packingCost}</td>
+                <td>Wash SSLDR Side One</td>
+                <td>{this.props.values.washSsldrSideOne}</td>
               </tr>
               <tr>
-                <td>Program and Test Minutes</td>
-                <td>{this.props.values.pgrmAndTestMinutes}</td>
+                <td>SSLDR Side Two Components</td>
+                <td>{this.props.values.ssldrSideTwoComponents}</td>
+              </tr>
+              <tr>
+                <td>SSLDR Side Two Joints</td>
+                <td>{this.props.values.ssldrSideTwoJoints}</td>
+              </tr>
+              <tr>
+                <td>Wash SSLDR Side Two</td>
+                <td>{this.props.values.washSsldrSideTwo}</td>
               </tr>
               <tr>
                 <td>Prep Leads</td>
                 <td>{this.props.values.prepLeads}</td>
-              </tr>
-              <tr>
-                <td>Release Size</td>
-                <td>{this.props.values.releaseSize}</td>
-              </tr>
-              <tr>
-                <td>SMT Components</td>
-                <td>{this.props.values.smtComponents}</td>
-              </tr>
-              <tr>
-                <td>SMT Placements</td>
-                <td>{this.props.values.smtPlacements}</td>
-              </tr>
-              <tr>
-                <td>SSLDR Components</td>
-                <td>{this.props.values.ssldrComponents}</td>
-              </tr>
-              <tr>
-                <td>SSLDR Joints</td>
-                <td>{this.props.values.ssldrJoints}</td>
               </tr>
               <tr>
                 <td>Stuff Components</td>
@@ -132,12 +120,56 @@ class ConfirmationScreen extends React.Component {
                 <td>{this.props.values.stuffPlacements}</td>
               </tr>
               <tr>
+                <td>Flow Cycle</td>
+                <td>{this.props.values.flowCycle}</td>
+              </tr>
+              <tr>
+                <td>Wash Flow Cycle</td>
+                <td>{this.props.values.washFlowCycle}</td>
+              </tr>
+              <tr>
                 <td>Trim Leads</td>
                 <td>{this.props.values.trimLeads}</td>
               </tr>
               <tr>
-                <td>Wash Cycles</td>
-                <td>{this.props.values.washCycles}</td>
+                <td>HSLDR Components</td>
+                <td>{this.props.values.hsldrComponents}</td>
+              </tr>
+              <tr>
+                <td>HSLDR Leads</td>
+                <td>{this.props.values.hsldrLeads}</td>
+              </tr>
+              <tr>
+                <td>Wash HSLDR</td>
+                <td>{this.props.values.washHsldrCycle}</td>
+              </tr>
+              <tr>
+                <td>Cable Minutes</td>
+                <td>{this.props.values.cableMinutes}</td>
+              </tr>
+              <tr>
+                <td>Program and Test Minutes</td>
+                <td>{this.props.values.pgrmAndTestMinutes}</td>
+              </tr>
+              <tr>
+                <td>Depanelize</td>
+                <td>{this.props.values.depanelize}</td>
+              </tr>
+              <tr>
+                <td>Coating</td>
+                <td>{this.props.values.coating}</td>
+              </tr>
+              <tr>
+                <td>Mech Minutes</td>
+                <td>{this.props.values.mechMinutes}</td>
+              </tr>
+              <tr>
+                <td>Packing Cost</td>
+                <td>{this.props.values.packingCost}</td>
+              </tr>
+              <tr>
+                <td>Release Size</td>
+                <td>{this.props.values.releaseSize}</td>
               </tr>
             </tbody>
             </table>
