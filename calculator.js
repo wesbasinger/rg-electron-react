@@ -15,49 +15,96 @@ module.exports = (vals) => {
     note: `${totalComponents} line items`
   })
 
+  let washTime = 8*60; // assume minumum of 8 minutes per wash cycle
+
+  if(vals.washSMTSideOne === "YES" || vals.washSMTSideTwo === "YES" ||
+     vals.washSsldrSideOne === "YES" || vals.washSsldrSideTwo === "YES" ||
+      vals.washFlowCycle === "YES" || vals.washHsldrCycle === "YES") {
+
+        const totalPanels = Math.ceil(vals.releaseSize/vals.boardPerPanel);
+
+        if(totalPanels > 5) {
+          washTime += 12*totalPanels;
+        }
+  }
+
+  if(vals.smtComponents > 0) {
+    const smtSetupTime = vals.smtSetupMinComp*vals.smtComponents;
+    let sideOneMaxPlacements = vals.smtSideOnePlacements*vals.boardPerPanel*80;
+    if(sideOneMaxPlacements > 40000) {
+      sideOneMaxPlacements = 40000;
+    }
+    const sideOneOp = {
+      desc: "SMT",
+      setupTime: smtSetupTime/60,
+      prodTime: vals.smtSideOnePlacements/sideOneMaxPlacements,
+      note: `${vals.smtComponents} unique components ${vals.smtSideOnePlacements} placements. Assume ${sideOneMaxPlacements} max placements per hour.`
+    }
+
+    rtgSteps.push(sideOneOp);
+
+    const aoiBoardsPerHour = excelValues.aoiInspPanelsPerHour*excelValues.boardPerPanel
+    const aoiHoursPerBoard = 1 / aoiBoardsPerHour;
+
+    rtgSteps.push({
+      desc: "AOI",
+      setupTime: 0,
+      prodTime: aoiHoursPerBoard,
+      note: `Assuming ${aoiHoursPerBoard} AOI hours per board.`
+    });
+
+    if(vals.washSMTSideOne === "YES") {
+      rtgSteps.push({
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/vals.releaseSize)/3600,
+        note: ""
+      })
+    }
+
+    if(vals.smtSideOnePlacements > 0) {
+      let sideTwoMaxPlacements = vals.smtSideTwoPlacements*vals.boardPerPanel*80;
+      if(sideTwoMaxPlacements > 40000) {
+        sideTwoMaxPlacements = 40000;
+      }
+      rtgSteps.push({
+        desc: "SMT",
+        setupTime: 0,
+        prodTime: vals.smtSideTwoPlacements/sideTwoMaxPlacements,
+        note: `${vals.smtSideTwoPlacements} placements. Assume ${sideTwoMaxPlacements} max placements per hour.`
+      });
+
+      rtgSteps.push({
+        desc: "AOI",
+        setupTime: 0,
+        prodTime: aoiHoursPerBoard,
+        note: `Assuming ${aoiHoursPerBoard} AOI hours per board.`
+      });
+
+      if(vals.washSMTSideTwo === "YES") {
+        rtgSteps.push({
+          desc: "WASH",
+          setupTime: 0,
+          prodTime: (washTime/vals.releaseSize)/3600,
+          note: ""
+        })
+      }
+
+    }
+
+  }
+
+  if(vals.maskAreas > 0) {
+    rtgSteps.push({
+      desc: "MASK",
+      setupTime: 0,
+      prodTime: vals.maskAreas*15/3600,
+      note: `${vals.maskAreas} mask areas`
+    })
+  }
+
   return rtgSteps;
 
-  // switch (wcObj.wc) {
-  //   case "MAT":
-  //     return ([{
-  //       desc: "MAT",
-  //       setupTime: (120 * wcObj.setupQty + 5*60)/ 3600,
-  //       prodTime: 0.001,
-  //       note: `${wcObj.setupQty} line items.`
-  //     }])
-  //   case "SMT":
-  //     let maxPlacementsPerHour = excelValues.boardPerPanel*wcObj.prodQty*80;
-  //     if(maxPlacementsPerHour > 40000) {
-  //       maxPlacementsPerHour = 40000;
-  //     }
-  //
-  //     const aoiBoardsPerHour = excelValues.aoiInspPanelsPerHour*excelValues.boardPerPanel
-  //     const aoiHoursPerBoard = 1 / aoiBoardsPerHour;
-  //
-  //     return(
-  //       [
-  //         {
-  //           desc: "SMT",
-  //           setupTime: (excelValues.smtSetupMinComp*wcObj.setupQty) / 60,
-  //           prodTime: (wcObj.prodQty/maxPlacementsPerHour),
-  //           note: `${wcObj.setupQty} unique components ${wcObj.prodQty} placements. Assume ${maxPlacementsPerHour} max placements per hour.`
-  //         },
-  //         {
-  //           desc: "AOI",
-  //           setupTime: 0,
-  //           prodTime: aoiHoursPerBoard,
-  //           note: `Assuming ${aoiBoardsPerHour} per hour.`
-  //         }
-  //       ]
-  //     )
-  //
-  //   case "MASK":
-  //     return([{
-  //       desc: "MASK",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty*15)/3600, //default of 15 cent per area
-  //       note: `${wcObj.prodQty} mask areas`
-  //     }])
   //
   //   case "SSLDR":
   //     return([{
@@ -101,20 +148,7 @@ module.exports = (vals) => {
   //       }
   //     ])
   //
-  //   case "WASH":
-  //     let washTime = 8*60; // assume minumum of 8 minutes per wash cycle
-  //     const totalPanels = Math.ceil(excelValues.releaseSize/excelValues.boardPerPanel);
-  //
-  //     if(totalPanels >= 5) {
-  //       washTime += 12*totalPanels
-  //     }
-  //
-  //     return([{
-  //       desc: "WASH",
-  //       setupTime: 0,
-  //       prodTime: (washTime/excelValues.releaseSize)/3600,
-  //       note: ""
-  //     }])
+
   //
   //   case "TRIM":
   //     return([{
