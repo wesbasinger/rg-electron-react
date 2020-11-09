@@ -43,7 +43,7 @@ module.exports = (vals) => {
 
     rtgSteps.push(sideOneOp);
 
-    const aoiBoardsPerHour = excelValues.aoiInspPanelsPerHour*excelValues.boardPerPanel
+    const aoiBoardsPerHour = vals.aoiInspPanelsPerHour*vals.boardPerPanel
     const aoiHoursPerBoard = 1 / aoiBoardsPerHour;
 
     rtgSteps.push({
@@ -103,122 +103,174 @@ module.exports = (vals) => {
     })
   }
 
+  if(vals.ssldrSideOneJoints > 0) {
+    rtgSteps.push({
+      desc: "SSLDR",
+      setupTime: 0,
+      prodTime: (vals.ssldrSecJoint*vals.ssldrSideOneJoints)/3600,
+      note: ""
+    });
+
+    if(vals.washSsldrSideOne === "YES") {
+      rtgSteps.push({
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/vals.releaseSize)/3600,
+        note: ""
+      })
+    }
+  }
+
+  if(vals.ssldrSideTwoJoints > 0) {
+    rtgSteps.push({
+      desc: "SSLDR",
+      setupTime: 0,
+      prodTime: (vals.ssldrSecJoint*vals.ssldrSideTwoJoints)/3600,
+      note: ""
+    });
+
+    if(vals.washSsldrSideOne === "YES") {
+      rtgSteps.push({
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/vals.releaseSize)/3600,
+        note: ""
+      })
+    }
+  }
+
+  if(vals.prepLeads > 0) {
+    rtgSteps.push({
+      desc: "PREP",
+      setupTime: 0,
+      prodTime: (vals.prepLeads*10)/3600,
+      note: ""
+    })
+  }
+
+  if(vals.stuffPlacements > 0) {
+    rtgSteps.push({
+      desc: "STUFF",
+      setupTime: 0,
+      prodTime: (vals.stuffPlacements*10)/3600,
+      note: ""
+    })
+  }
+
+  if(vals.flowCycle === "YES") {
+    const flowBoardsPerHour = vals.flowPanelsPerHour*vals.boardPerPanel;
+    const flowHoursPerBoard = 1 / flowBoardsPerHour;
+
+    rtgSteps.push({
+      desc: "IPQC",
+      setupTime: 0,
+      prodTime: (vals.stuffPlacements*3)/3600,
+      note: ""
+    })
+
+    rtgSteps.push({
+      desc: "FLOW",
+      setupTime: 0,
+      prodTime: flowHoursPerBoard,
+      note: `Assume ${flowBoardsPerHour} boards per hour.`
+    })
+
+    if(vals.washFlowCycle === "YES") {
+      rtgSteps.push({
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/vals.releaseSize)/3600,
+        note: ""
+      })
+    }
+  }
+
+  if(vals.trimLeads > 0) {
+    rtgSteps.push({
+      desc: "TRIM",
+      setupTime: 0,
+      prodTime: (vals.trimLeads/3)*2.5/3600,
+      note: ""
+    })
+  }
+
+  if (vals.hsldrLeads > 0) {
+    rtgSteps.push({
+      desc: "HSLDR",
+      setupTime: 0,
+      prodTime: (10*vals.hsldrLeads)/3600,
+      note: ""
+    })
+
+    if(vals.washHsldrCycle === "YES") {
+      rtgSteps.push({
+        desc: "WASH",
+        setupTime: 0,
+        prodTime: (washTime/vals.releaseSize)/3600,
+        note: ""
+      })
+    }
+  }
+
+  if(vals.cableMinutes > 0) {
+    rtgSteps.push({
+      desc: "CABLE",
+      setupTime: 0,
+      prodTime: (vals.cableMinutes)/60,
+      note: `${vals.cableMinutes} minutes per assembly.`
+    })
+  }
+
+  if(vals.pgrmAndTestMinutes > 0) {
+    rtgSteps.push({
+      desc: "TEST",
+      setupTime: 0,
+      prodTime: vals.pgrmAndTestMinutes/60,
+      note: ""
+    })
+  }
+
+  if(vals.depanelize === "YES") {
+    rtgSteps.push({
+      desc: "SHEAR",
+      setupTime: 0,
+      prodTime: 5/3600,
+      note: ""
+    })
+  }
+
+  if(vals.coating === "YES") {
+    rtgSteps.push({
+      desc: "COAT",
+      setupTime: 0,
+      prodTime: vals.coatTimeSecPerSqInch*vals.sqInchPerBoard + vals.coatHandleSecPerBoard / 3600,
+      note: ""
+    })
+  }
+
+  if(vals.mechMinutes > 0) {
+    rtgSteps.push({
+      desc: "MECH",
+      setupTime: 0,
+      prodTime: vals.mechMinutes/3600,
+      note: ""
+    })
+  }
+
+  rtgSteps.push({
+    desc: "FINAL",
+    setupTime: 0,
+    prodTime: (totalComponents*.4)/3600,
+    note: ""
+  })
+
+  rtgSteps.push({
+    desc: "PACK",
+    setupTime: 0,
+    prodTime: vals.packingCost*100/3600,
+    note: ""
+  })
+
   return rtgSteps;
-
-  //
-  //   case "SSLDR":
-  //     return([{
-  //       desc: "SSLDR",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty*excelValues.ssldrSecJoint) / 3600,
-  //       note: ""
-  //     }])
-  //   case "PREP":
-  //     return([{
-  //       desc: "PREP",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per lead
-  //       note: `${wcObj.prodQty} total leads to be prepped`
-  //     }])
-  //   case "STUFF":
-  //
-  //     return([{
-  //       desc: "STUFF",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty*10)/3600, // default of 10 cents per location
-  //       note: `${wcObj.prodQty} total placements`
-  //     }])
-  //   case "FLOW":
-  //
-  //     const flowBoardsPerHour = excelValues.flowPanelsPerHour*excelValues.boardPerPanel
-  //     const flowHoursPerBoard = 1 / flowBoardsPerHour;
-  //
-  //     return([
-  //       {
-  //         desc: "FLOW",
-  //         setupTime: 0,
-  //         prodTime: flowHoursPerBoard,
-  //         note: `Assuming ${flowBoardsPerHour} boards per hour.`
-  //       },
-  //       {
-  //         desc: "IPQC",
-  //         setupTime: 0,
-  //         prodTime: (excelValues.stuffPlacements*3)/3600, // assuming 3 seconds insp per placements
-  //         note: `${excelValues.stuffComponents} placements to inspect`
-  //       }
-  //     ])
-  //
-
-  //
-  //   case "TRIM":
-  //     return([{
-  //       desc: "TRIM",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty/2.5)/3600,
-  //       note: `${wcObj.prodQty} leads to trim`
-  //     }])
-  //
-  //   case "HSLDR":
-  //     return ([{
-  //       desc: "HSLDR",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty*10)/3600, // assume 10 minutes per joint
-  //       note: `${wcObj.prodQty} joints to solder`
-  //     }])
-  //
-  //   case "TEST":
-  //     return([{
-  //       desc: "TEST",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty) / 60,
-  //       note: `${wcObj.prodQty} minutes of test`
-  //     }])
-  //
-  //   case "SHEAR":
-  //     return([{
-  //       desc: "SHEAR",
-  //       setupTime: 0,
-  //       prodTime: 5/3600,
-  //       note: "Assume 5 seconds per assembly"
-  //     }])
-  //
-  //   case "COAT":
-  //     return([{
-  //       desc: "COAT",
-  //       setupTime: 0,
-  //       prodTime: (excelValues.coatHandleSecPerBoard
-  //                 + excelValues.coatTimeSecPerSqInch*excelValues.sqInchPerBoard) / 3600,
-  //       note: `${(excelValues.coatHandleSecPerBoard
-  //                 + excelValues.coatTimeSecPerSqInch*excelValues.sqInchPerBoard)/60} minutes per board`
-  //     }])
-  //
-  //   case "MECH":
-  //     return([{
-  //       desc: "MECH",
-  //       setupTime: 0,
-  //       prodTime: (wcObj.prodQty)/60,
-  //       note: `${wcObj.prodQty} minutes per assembly`
-  //     }])
-  //
-  //   case "FINAL":
-  //
-  //     const totalComponents = excelValues.smtComponents + excelValues.ssldrComponents +
-  //                             excelValues.stuffComponents + excelValues.hsldrComponents + excelValues.mechComponents;
-  //     return([{
-  //       desc: "FINAL",
-  //       setupTime: 0,
-  //       prodTime: (totalComponents*0.4)/3600,
-  //       note: `${totalComponents} components to inspect`
-  //     }])
-  //
-  //   case "PACK":
-  //
-  //     return([{
-  //       desc: "PACK",
-  //       setupTime: 0,
-  //       prodTime: 30/3600,
-  //       note: "Standard 30 seconds per unit"
-  //     }])
-  // }
 
 }
