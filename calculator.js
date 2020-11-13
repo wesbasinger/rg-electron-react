@@ -2,6 +2,8 @@
 
 module.exports = (vals) => {
 
+  const HIDDEN_SETUP = (4*60/vals.releaseSize)/3600;
+
   const rtgSteps = [];
 
   const totalComponents = vals.smtComponents + vals.ssldrSideOneComponents +
@@ -11,7 +13,7 @@ module.exports = (vals) => {
   rtgSteps.push({
     desc: "MAT",
     setupTime: (120*totalComponents + 5*60)/3600,
-    prodTime: 0.001,
+    prodTime: 0.001 + HIDDEN_SETUP,
     note: `${totalComponents} line items`
   })
 
@@ -37,7 +39,7 @@ module.exports = (vals) => {
     const sideOneOp = {
       desc: "SMT",
       setupTime: smtSetupTime/60,
-      prodTime: vals.smtSideOnePlacements/sideOneMaxPlacements,
+      prodTime: vals.smtSideOnePlacements/sideOneMaxPlacements + HIDDEN_SETUP,
       note: `${vals.smtComponents} unique components ${vals.smtSideOnePlacements} placements. Assume ${sideOneMaxPlacements} max placements per hour.`
     }
 
@@ -49,7 +51,7 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "AOI",
       setupTime: 0,
-      prodTime: aoiHoursPerBoard,
+      prodTime: aoiHoursPerBoard + HIDDEN_SETUP,
       note: `Assuming ${aoiHoursPerBoard} AOI hours per board.`
     });
 
@@ -57,12 +59,12 @@ module.exports = (vals) => {
       rtgSteps.push({
         desc: "WASH",
         setupTime: 0,
-        prodTime: (washTime/vals.releaseSize)/3600,
+        prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
         note: ""
       })
     }
 
-    if(vals.smtSideOnePlacements > 0) {
+    if(vals.smtSideTwoPlacements > 0) {
       let sideTwoMaxPlacements = vals.smtSideTwoPlacements*vals.boardPerPanel*80;
       if(sideTwoMaxPlacements > 40000) {
         sideTwoMaxPlacements = 40000;
@@ -70,14 +72,14 @@ module.exports = (vals) => {
       rtgSteps.push({
         desc: "SMT",
         setupTime: 0,
-        prodTime: vals.smtSideTwoPlacements/sideTwoMaxPlacements,
+        prodTime: vals.smtSideTwoPlacements/sideTwoMaxPlacements + HIDDEN_SETUP,
         note: `${vals.smtSideTwoPlacements} placements. Assume ${sideTwoMaxPlacements} max placements per hour.`
       });
 
       rtgSteps.push({
         desc: "AOI",
         setupTime: 0,
-        prodTime: aoiHoursPerBoard,
+        prodTime: aoiHoursPerBoard + HIDDEN_SETUP,
         note: `Assuming ${aoiHoursPerBoard} AOI hours per board.`
       });
 
@@ -85,7 +87,7 @@ module.exports = (vals) => {
         rtgSteps.push({
           desc: "WASH",
           setupTime: 0,
-          prodTime: (washTime/vals.releaseSize)/3600,
+          prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
           note: ""
         })
       }
@@ -98,7 +100,7 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "MASK",
       setupTime: 0,
-      prodTime: vals.maskAreas*15/3600,
+      prodTime: vals.maskAreas*15/3600 + HIDDEN_SETUP,
       note: `${vals.maskAreas} mask areas`
     })
   }
@@ -107,15 +109,15 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "SSLDR",
       setupTime: 0,
-      prodTime: (vals.ssldrSecJoint*vals.ssldrSideOneJoints)/3600,
-      note: ""
+      prodTime: (vals.ssldrSecJoint*vals.ssldrSideOneJoints)/3600 + HIDDEN_SETUP,
+      note: `Approximately ${Math.ceil(vals.ssldrSecJoint*vals.ssldrSideOneJoints/60)} minutes per board.`
     });
 
     if(vals.washSsldrSideOne === "YES") {
       rtgSteps.push({
         desc: "WASH",
         setupTime: 0,
-        prodTime: (washTime/vals.releaseSize)/3600,
+        prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
         note: ""
       })
     }
@@ -125,15 +127,15 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "SSLDR",
       setupTime: 0,
-      prodTime: (vals.ssldrSecJoint*vals.ssldrSideTwoJoints)/3600,
-      note: ""
+      prodTime: (vals.ssldrSecJoint*vals.ssldrSideTwoJoints)/3600 + HIDDEN_SETUP,
+      note: `Approximately ${Math.ceil(vals.ssldrSecJoint*vals.ssldrSideTwoJoints/60)} minutes per board.`
     });
 
     if(vals.washSsldrSideOne === "YES") {
       rtgSteps.push({
         desc: "WASH",
         setupTime: 0,
-        prodTime: (washTime/vals.releaseSize)/3600,
+        prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
         note: ""
       })
     }
@@ -143,8 +145,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "PREP",
       setupTime: 0,
-      prodTime: (vals.prepLeads*10)/3600,
-      note: ""
+      prodTime: (vals.prepLeads*10)/3600 + HIDDEN_SETUP,
+      note: `${vals.prepLeads} total lead to prep.`
     })
   }
 
@@ -152,8 +154,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "STUFF",
       setupTime: 0,
-      prodTime: (vals.stuffPlacements*10)/3600,
-      note: ""
+      prodTime: (vals.stuffPlacements*10)/3600 + HIDDEN_SETUP,
+      note: `${vals.stuffComponents} total components to stuff.`
     })
   }
 
@@ -164,14 +166,14 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "IPQC",
       setupTime: 0,
-      prodTime: (vals.stuffPlacements*3)/3600,
-      note: ""
+      prodTime: (vals.stuffPlacements*3)/3600 + HIDDEN_SETUP,
+      note: `${vals.stuffPlacements*3/60} minutes to inspect.`
     })
 
     rtgSteps.push({
       desc: "FLOW",
       setupTime: 0,
-      prodTime: flowHoursPerBoard,
+      prodTime: flowHoursPerBoard + HIDDEN_SETUP,
       note: `Assume ${flowBoardsPerHour} boards per hour.`
     })
 
@@ -179,7 +181,7 @@ module.exports = (vals) => {
       rtgSteps.push({
         desc: "WASH",
         setupTime: 0,
-        prodTime: (washTime/vals.releaseSize)/3600,
+        prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
         note: ""
       })
     }
@@ -189,8 +191,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "TRIM",
       setupTime: 0,
-      prodTime: (vals.trimLeads/3)*2.5/3600,
-      note: ""
+      prodTime: (vals.trimLeads/3)*2.5/3600 + HIDDEN_SETUP,
+      note: `${vals.trimLeads} total leads to trim.`
     })
   }
 
@@ -198,15 +200,15 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "HSLDR",
       setupTime: 0,
-      prodTime: (10*vals.hsldrLeads)/3600,
-      note: ""
+      prodTime: (10*vals.hsldrLeads)/3600 + HIDDEN_SETUP,
+      note: `${vals.hsldrLeads} total leads to hand solder.`
     })
 
     if(vals.washHsldrCycle === "YES") {
       rtgSteps.push({
         desc: "WASH",
         setupTime: 0,
-        prodTime: (washTime/vals.releaseSize)/3600,
+        prodTime: (washTime/vals.releaseSize)/3600 + HIDDEN_SETUP,
         note: ""
       })
     }
@@ -216,7 +218,7 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "CABLE",
       setupTime: 0,
-      prodTime: (vals.cableMinutes)/60,
+      prodTime: (vals.cableMinutes)/60 + HIDDEN_SETUP,
       note: `${vals.cableMinutes} minutes per assembly.`
     })
   }
@@ -225,8 +227,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "TEST",
       setupTime: 0,
-      prodTime: vals.pgrmAndTestMinutes/60,
-      note: ""
+      prodTime: vals.pgrmAndTestMinutes/60 + HIDDEN_SETUP,
+      note: `${vals.prgrmAndTestMinues} minutes for program and test.`
     })
   }
 
@@ -234,8 +236,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "SHEAR",
       setupTime: 0,
-      prodTime: 5/3600,
-      note: ""
+      prodTime: 5/3600 + HIDDEN_SETUP,
+      note: "5 seconds per board"
     })
   }
 
@@ -243,8 +245,8 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "COAT",
       setupTime: 0,
-      prodTime: vals.coatTimeSecPerSqInch*vals.sqInchPerBoard + vals.coatHandleSecPerBoard / 3600,
-      note: ""
+      prodTime: (vals.coatTimeSecPerSqInch*vals.sqInchPerBoard + vals.coatHandleSecPerBoard) / 3600 + HIDDEN_SETUP,
+      note: `Approximately ${Math.ceil((vals.coatTimeSecPerSqInch*vals.sqInchPerBoard + vals.coatHandleSecPerBoard)/60)} minutes per board.`
     })
   }
 
@@ -252,23 +254,23 @@ module.exports = (vals) => {
     rtgSteps.push({
       desc: "MECH",
       setupTime: 0,
-      prodTime: vals.mechMinutes/3600,
-      note: ""
+      prodTime: vals.mechMinutes/3600 + HIDDEN_SETUP,
+      note: `${vals.mechMinutes} minutes per board.`
     })
   }
 
   rtgSteps.push({
     desc: "FINAL",
     setupTime: 0,
-    prodTime: (totalComponents*.4)/3600,
-    note: ""
+    prodTime: (totalComponents*.4)/3600 + HIDDEN_SETUP,
+    note: `${(totalComponents*.4)/60} minutes per board.`
   })
 
   rtgSteps.push({
     desc: "PACK",
     setupTime: 0,
-    prodTime: vals.packingCost*100/3600,
-    note: ""
+    prodTime: vals.packingCost*100/3600 + HIDDEN_SETUP,
+    note: `${vals.packingCost*100/60} minutes per assembly.`
   })
 
   return rtgSteps;

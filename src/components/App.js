@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import LoadScreen from './LoadScreen';
 import ConfirmationScreen from './ConfirmationScreen';
 import RoutingScreen from './RoutingScreen';
+import Header from './Header';
 
 import calculate from '../../calculator';
 
@@ -38,11 +39,16 @@ class App extends React.Component {
 
   render() {
     if(!this.state.values) {
-      return(<LoadScreen />)
+      return(
+        <div>
+          <Header />
+          <LoadScreen />
+        </div>
+      )
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     } else if (this.state.confirmed) {
-      return (<RoutingScreen releaseSize={this.state.values.releaseSize} rtg={this.state.rtg} />)
+      return (<RoutingScreen releaseSize={this.state.values.releaseSize} rtg={this.state.rtg} assemblyNumber={this.state.values.assemblyNumber}/>)
     }
   }
 }

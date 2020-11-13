@@ -2,3 +2,18 @@ h1 {
   font-family: helvetica;
   font-weight: 200;
 }
+
+table {
+  font-family: courier;
+  font-weight: 300;
+  font-size: 14
+}
+
+thead {
+  color: gray;
+  font-style: oblique;
+}
+
+td {
+  width: auto;
+}

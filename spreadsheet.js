@@ -49,7 +49,8 @@ const extractValues = async (fileString) => {
     mechMinutes: Number(ws.getCell('C36').text),
     packingCost: Number(ws.getCell('E38').text),
 
-    releaseSize: Number(ws.getCell('F16'))
+    releaseSize: Number(ws.getCell('F16').text),
+    assemblyNumber: ws.getCell('B7').text
 
   }
 
