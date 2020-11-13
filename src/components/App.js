@@ -48,7 +48,9 @@ class App extends React.Component {
     } else if (this.state.values && !this.state.confirmed) {
       return (<ConfirmationScreen onConfirm={this.onConfirmValues} values={this.state.values} />)
     } else if (this.state.confirmed) {
-      return (<RoutingScreen releaseSize={this.state.values.releaseSize} rtg={this.state.rtg} assemblyNumber={this.state.values.assemblyNumber}/>)
+      return (<RoutingScreen
+        releaseSize={this.state.values.releaseSize} rtg={this.state.rtg}
+        assemblyNumber={this.state.values.assemblyNumber} />)
     }
   }
 }

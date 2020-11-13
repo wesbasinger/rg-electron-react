@@ -1,6 +1,8 @@
 import '../assets/css/App.css';
 import React, { Component } from 'react';
 
+import { ipcRenderer } from 'electron';
+
 class RoutingScreen extends React.Component {
 
   render() {
@@ -37,6 +39,9 @@ class RoutingScreen extends React.Component {
               }
             </tbody>
           </table>
+          <button onClick={() => {
+            ipcRenderer.send('csv-data', this.props.rtg);
+          }}>Export Values</button>
         </div>
       )
   }

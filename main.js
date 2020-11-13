@@ -99,3 +99,7 @@ ipcMain.on('open-spreadsheet', (event, arg) => {
   )
 
 });
+
+ipcMain.on('csv-data', (event, arg) => {
+  console.log(arg);
+})
