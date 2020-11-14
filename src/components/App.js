@@ -7,6 +7,7 @@ import RoutingScreen from './RoutingScreen';
 import Header from './Header';
 
 import calculate from '../../calculator';
+import sequence from '../../sequencer';
 
 import { ipcRenderer } from 'electron';
 
@@ -33,7 +34,8 @@ class App extends React.Component {
 
   onConfirmValues(event) {
     const calcRtg = calculate(this.state.values);
-    this.setState({rtg: calcRtg});
+    const finishedRtg = sequence(this.state.values.releaseSize, calcRtg);
+    this.setState({rtg: finishedRtg});
     this.setState({confirmed:true})
   }
 

@@ -1,21 +1,19 @@
+// takes releaseSize and rtgSteps and returns full routing
 module.exports = (releaseSize, rtgSteps) => {
-  let currSeq = 10
-  const result = []
 
-  
+  const result = [];
+
+  rtgSteps.forEach((item, i) => {
+    result.push({
+      seq: i*10 + 10,
+      desc: item.desc,
+      setupTime: Math.round(item.setupTime * 1000) / 1000,
+      prodTime: Math.round(item.prodTime * 1000) / 1000,
+      totalTime: Math.round(item.setupTime + item.prodTime*releaseSize * 1000) / 1000,
+      note: item.note
+    })
+  });
+
+  return result;
+
 }
-
-/*
-releaseSize={this.state.values.releaseSize} rtg={this.state.rtg}
-assemblyNumber={this.state.values.assemblyNumber}
-*/
-
-/*
-<tr key={idx}>
-  <td>{(idx+1)*10}</td>
-  <td>{op.desc}</td>
-  <td>{Math.round(op.setupTime * 1000) / 1000}</td>
-  <td>{Math.round(op.prodTime * 1000) / 1000}</td>
-  <td>{Math.round(op.setupTime + op.prodTime*this.props.releaseSize * 1000) / 1000}</td>
-  <td>{op.note}</td>
-  */

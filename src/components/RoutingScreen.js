@@ -27,11 +27,11 @@ class RoutingScreen extends React.Component {
 
                   return(
                     <tr key={idx}>
-                      <td>{(idx+1)*10}</td>
+                      <td>{op.seq}</td>
                       <td>{op.desc}</td>
-                      <td>{Math.round(op.setupTime * 1000) / 1000}</td>
-                      <td>{Math.round(op.prodTime * 1000) / 1000}</td>
-                      <td>{Math.round(op.setupTime + op.prodTime*this.props.releaseSize * 1000) / 1000}</td>
+                      <td>{op.setupTime}</td>
+                      <td>{op.prodTime}</td>
+                      <td>{op.totalTime}</td>
                       <td>{op.note}</td>
                     </tr>
                   )
