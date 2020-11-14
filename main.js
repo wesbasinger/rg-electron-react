@@ -3,6 +3,7 @@
 // Import parts of electron to use
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path')
+const fs = require('fs');
 const url = require('url')
 
 const { extractValues } = require('./spreadsheet');
@@ -102,4 +103,18 @@ ipcMain.on('open-spreadsheet', (event, arg) => {
 
 ipcMain.on('csv-data', (event, arg) => {
   console.log(arg);
+  dialog.showSaveDialog(mainWindow, {title: "Export Routing to CSV"}).then(async (res) => {
+    if(!res.canceled && res.filePath) {
+      fs.writeFileSync(res.filePath, arg);
+      dialog.showMessageBox({
+        message: "Success!",
+        buttons: ["OK"]
+      })
+    } else {
+      dialog.showMessageBox({
+        message: "No file selected.",
+        buttons: ["OK"]
+      })
+    }
+  })
 })
