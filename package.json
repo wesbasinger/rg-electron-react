@@ -1,6 +1,6 @@
 {
   "name": "routing-generator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reads a 04.002 Quotation Spreadsheet and outputs a draft routing",
   "author": "Wes Basinger",
   "homepage": "https://github.com/wesbasinger/rg-electron-react",
