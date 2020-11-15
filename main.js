@@ -1,7 +1,8 @@
 'use strict';
 
 // Import parts of electron to use
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu, shell } = require('electron');
+const defaultMenu = require('electron-default-menu');
 const path = require('path')
 const fs = require('fs');
 const url = require('url')
@@ -66,7 +67,22 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  const menu = defaultMenu(app, shell);
+  menu.splice(4,0, {
+    label: 'Print',
+    submenu: [
+      {
+        label: 'Print',
+        click: (item, focusedWindow) => {
+          mainWindow.webContents.print();
+        }
+      }
+    ]
+  })
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

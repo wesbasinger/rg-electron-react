@@ -7,6 +7,24 @@ import exporter from '../../export';
 
 class RoutingScreen extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      year: null,
+      month: null,
+      day: null
+    }
+  }
+
+  componentDidMount() {
+      const date = new Date();
+      this.setState({
+        year : date.getFullYear(),
+        month: date.getMonth()+1,
+        day: date.getDate()
+      })
+  }
+
   render() {
       return(
         <div>
@@ -41,8 +59,9 @@ class RoutingScreen extends React.Component {
               }
             </tbody>
           </table>
+          <p>Generated {`${this.state.year}-${this.state.month}-${this.state.day}`}</p>
           <button onClick={() => {
-            ipcRenderer.send('csv-data', exporter(this.props.rtg));
+            ipcRenderer.send('csv-data', exporter(this.props.rtg) + `Generated ${this.state.year}-${this.state.month}-${this.state.day}\n`);
           }}>Export Values</button>
         </div>
       )
